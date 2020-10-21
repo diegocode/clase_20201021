@@ -16,8 +16,10 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 
-const char* ssid = "Coopenet-Miori";
-const char* password = "miori24170";
+// usar nombre de la red wifi a la que se conectará la placa
+const char* ssid = "user";
+// usar password de la red wifi a la que se conectará la placa
+const char* password = "password";
 
 //Your Domain name with URL path or IP address with path
 String serverName = "http://diegocode.pythonanywhere.com/datain";
