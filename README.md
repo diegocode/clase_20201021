@@ -2,7 +2,7 @@
 
 Sistema de adquisición de datos utilizando:
 
-bottle (https://bottlepy.org/docs/dev/) y NodeMcu (ESP8266) con framework Arduino.
+bottle (https://bottlepy.org/) y NodeMcu (ESP8266) con framework Arduino.
 
 Recibe datos con la forma 
 
