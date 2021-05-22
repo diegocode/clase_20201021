@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>adquisición de datos</title>
+<link type="text/css" href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+	<table>
+		<tr>
+			<th>
+				temp
+			</th>
+			<th>
+				hume
+			</th>
+			<th>
+				# sens
+			</th>
+			<th>
+				time
+			</th>
+			<th>
+				ip
+			</th>		
+		</tr>
+		%for linea in datos:
+		<tr>
+			%for val in linea.split(list_sep):
+			<td>
+				{{val}}
+			</td>
+			%end
+		</tr>
+		%end	
+	</table>
+
+</body>
+
+<script>
+    // autorefresh - @30sec   
+    setTimeout("location.reload(true);", 30000);
+</script>
+</html>
+

@@ -1,16 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from bottle import default_app, route, request, template, static_file
+
+# descomentar para usar en PythonAnywhere
+# from bottle import default_app
+
+from bottle import route, request, template, static_file, run
 
 import datetime
+
+# líneas en el listado
+MAX_LINEAS = 20
+
 
 @route('/datain')
 def guardar_datos():
     """
-        recibe y guarda los datos del request de clientes
+        recibe y guarda los datos
     """
-    error_datain = 0
-
     # obtiene temperatura, humedad, sensor del request 
     temp = request.query.tempe
     hume = request.query.hume
@@ -28,45 +34,39 @@ def guardar_datos():
     ip_orig = request.environ.get('HTTP_X_FORWARDED_FOR') or request.environ.get('REMOTE_ADDR')
 
     # guarda los datos recibidos en un archivo de texto
-    # una línea solamente ! --> reemplazar por insert a BBDD
     try:
-        f = open("datos.csv", "w")
+        f = open("datos.csv", "a")
         linea_datos = temp + ";" + hume + ";" + sens_nro + ";" + tstamp + ";" + ip_orig + "\n"
         f.write(linea_datos)
         f.close()
-    except:
-        pass
+    except Exception as e:
+        print(e)
 
 
 @route('/')
-def inicio():
-    """
-        muestra home
-    """
-    return template('index_base.html')
+def index():
+    return template('templates/index.html')
 
 
-@route('/ver')
-def ver_datos():
+@route('/listado')
+def listado_datos():
     """
-        procesa el pedido del browser
-        lee los datos del archivo (reemplazar por BBDD!!)
-        y los envía como texto
+        lee MAX_LINEAS del archivo
+        y los envía en una lista
     """
-    f = open("datos.csv", "r")
-    medicion = f.readline().split(";")
-    f.close()
+    mediciones = []
 
     try:
-        temp = float(medicion[0])
-        hume = float(medicion[1])
-        snum = medicion[2]
-        tstm = medicion[3]
-        ipor = medicion[4]
+        with open('datos.csv') as f:
+            mediciones = list(f)[:-MAX_LINEAS - 1:-1]
     except:
-        print(medicion)
+        mediciones = ['?;?;?;?;?']
 
-    return "%5.2f %5.2f %3s %s %s" % (temp, hume, snum, tstm, ipor)
+    # print(mediciones)
+
+    return template('templates/lista.html', 
+                        datos=mediciones,
+                        list_sep=';')
 
 
 @route('/contacto')
@@ -83,6 +83,6 @@ def server_static(filepath):
 # ejecuta server de desarrollo
 run(host='localhost', port=8080, debug=True, reloader=True)
 
-# comentar la línea anterior y descomentar la sigiuente para usar en "prod"
+# comentar la línea anterior y descomentar la sigiuente para usar en PythonAnywhere
 # application = default_app()
 
