@@ -1,5 +1,6 @@
 # Sistema de adquisición de datos
-## clase_20201021
+## ejemplo de clase 2020-10-21
+### Sistemas embebidos
 
 Sistema de adquisición de datos utilizando:
 
