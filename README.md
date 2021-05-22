@@ -1,4 +1,5 @@
-# clase_20201021
+# Sistema de adquisición de datos
+## clase_20201021
 
 Sistema de adquisición de datos utilizando:
 
